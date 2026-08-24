@@ -61,4 +61,14 @@ jobs:
           psql -h 127.0.0.1 -p 5433 -U postgres -d python_backend_test -f Database/init.sql 
 
       - name: Run Tests
+        env:
+          # Match these names to whatever variable your Python code looks for
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5433/python_backend_test
+          # Or if your app reads individual variables:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5433
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: python_backend_test
         run: pytest -vv
+
