@@ -24,6 +24,7 @@ def test_database(): # save the original credentials before routing to test data
     original_name = sql_config.DB_NAME
     original_host = sql_config.DB_HOST
     original_port = sql_config.DB_PORT
+    original_password = sql_config.DB_PASSWORD
     original_redis_host = redis_config.HOST
     original_redis_port = redis_config.PORT
 
@@ -31,8 +32,10 @@ def test_database(): # save the original credentials before routing to test data
     sql_config.DB_NAME = "python_backend_test"
     sql_config.DB_HOST = "127.0.0.1"
     sql_config.DB_PORT = 5433
+    sql_config.DB_PASSWORD = "postgres"
     redis_config.HOST = "127.0.0.1"
     redis_config.PORT = 6380
+
 
     print(
     "TEST DB:",
@@ -53,6 +56,7 @@ def test_database(): # save the original credentials before routing to test data
     sql_config.DB_NAME = original_name # after using change back to original credentials
     sql_config.DB_HOST = original_host
     sql_config.DB_PORT = original_port
+    sql_config.DB_PASSWORD = original_password
     redis_config.HOST = original_redis_host
     redis_config.PORT = original_redis_port
 
