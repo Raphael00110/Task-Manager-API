@@ -54,6 +54,11 @@ jobs:
         run: |
           pg_isready -h 127.0.0.1 -p 5433 -U postgres -d python_backend_test
           psql -h 127.0.0.1 -p 5433 -U postgres -d python_backend_test -c "SELECT version();"
+      - name: Create Database Scheme
+        env:
+          PGPASSWORD: postgres
+        run: |
+          psql -h 127.0.0.1 -p 5433 -U postgres -d python_backend_test -f Database/init.sql 
 
       - name: Run Tests
         run: pytest -vv
