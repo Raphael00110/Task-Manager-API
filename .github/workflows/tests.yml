@@ -43,5 +43,12 @@ run: | #(about to write multiple line script) upgrade pip -> install requirments
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 pip install pytest
+
+- name: Check PostgreSQL
+  env: 
+    PGPASSWORD: postgres
+  run: |
+    pg_isready -h 127.0.0.1 -p 5433 -U postgres -d python_backend_test
+
 * name: Run Tests
 run: pytest -vv
