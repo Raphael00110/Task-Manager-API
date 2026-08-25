@@ -21,7 +21,7 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
-      redis:
+      redis: # create redis image setup port person health checks
         image: redis:7
         ports:
           - 6380:6379
@@ -43,7 +43,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest
-      - name: Install Postgre Client
+      - name: Install Postgre Client # install some postgres
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
@@ -51,18 +51,17 @@ jobs:
       - name: Check PostgreSQL
         env:
           PGPASSWORD: postgres
-        run: |
+        run: | # check postgres
           pg_isready -h 127.0.0.1 -p 5433 -U postgres -d python_backend_test
           psql -h 127.0.0.1 -p 5433 -U postgres -d python_backend_test -c "SELECT version();"
-      - name: Create Database Scheme
+      - name: Create Database Scheme # create the schema pass by passing init.sql
         env:
           PGPASSWORD: postgres
         run: |
           psql -h 127.0.0.1 -p 5433 -U postgres -d python_backend_test -f Database/init.sql 
 
       - name: Run Tests
-        env:
-          # Match these names to whatever variable your Python code looks for
+        env: # give env credentials because calling pytest
           DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5433/python_backend_test
           # Or if your app reads individual variables:
           DB_HOST: 127.0.0.1
