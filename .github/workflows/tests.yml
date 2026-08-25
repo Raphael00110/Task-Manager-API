@@ -70,5 +70,6 @@ jobs:
           DB_USER: postgres
           DB_PASSWORD: postgres
           DB_NAME: python_backend_test
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: pytest -vv
 
