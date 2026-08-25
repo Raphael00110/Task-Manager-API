@@ -71,4 +71,6 @@ jobs:
           DB_NAME: python_backend_test
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: pytest -vv
+      - name: Build Docker Image
+        run: docker build -t task-manager-api .
 
