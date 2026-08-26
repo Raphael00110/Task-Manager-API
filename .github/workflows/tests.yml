@@ -4,6 +4,10 @@ on: # wake up this pipeline on push,pull
   push:
   pull_request:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   test: # run tests in ubuntu environment
     runs-on: ubuntu-latest
@@ -71,6 +75,12 @@ jobs:
           DB_NAME: python_backend_test
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: pytest -vv
-      - name: Build Docker Image
-        run: docker build -t task-manager-api .
+      - name: Build, Athenticate and Push Docker Image # get secret token from github and login to ghcr.io with ur user without mirroring it in the terminal then docker tag gives it a link of latest finally push 
+        run:  |
+             docker build -t task-manager-api . 
+             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u raphael00110 --password-stdin 
+             docker tag task-manager-api ghcr.io/raphael001100/task-manager-api:latest
+             docker push ghcr.io/raphael00110/task-manager-api:latest
+
+
 
