@@ -79,7 +79,7 @@ jobs:
         run:  |
              docker build -t task-manager-api . 
              echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u raphael00110 --password-stdin 
-             docker tag task-manager-api ghcr.io/raphael001100/task-manager-api:latest
+             docker tag task-manager-api ghcr.io/raphael00110/task-manager-api:latest
              docker push ghcr.io/raphael00110/task-manager-api:latest
 
 
